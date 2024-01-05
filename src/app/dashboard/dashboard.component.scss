@@ -1,0 +1,29 @@
+.dashboard-section {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .container {
+        max-width: 600px;
+    }
+    .dashboard-title {
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 48px;
+    }
+    .logout-btn {
+        width: 100%;
+        background: #000;
+        color: #fff;
+        border: 1px solid transparent;
+        padding: 12px 24px;
+        cursor: pointer;
+        transition: all 0.5s;
+        &:hover {
+            background: #fff;
+            color: #000;
+            border: 1px solid #000;
+        }
+    }
+}
