@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
         next: data => {
           //store token
           this.auth.storeToken(data.token);
-          this.auth.storeInfo(data.this)
           console.log('logged user token is ' + data.token);
           this.auth.canAuthenticate();
         },

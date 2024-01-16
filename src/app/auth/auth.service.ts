@@ -2,13 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of, throwError } from 'rxjs';
-import { User } from './models/User';
+import { User } from './shared/models/User';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    users = [{ id: 1, username: 'Peter', email: "peter@mail.com", password: '123' }, { id: 2, username: 'David', email: "david@mail.com", password: '456' }]
     constructor(private router: Router, private http: HttpClient) { }
 
     isAuthenticated(): boolean {
@@ -17,7 +16,16 @@ export class AuthService {
         }
         return false;
     }
+    private generateRandomUser() {
+        var user = {
+            id: Math.floor(Math.random() * 1000000),
+            username: Math.random().toString(36).substring(7),
+            email: Math.random().toString(36).substring(7) + '@example.com',
+            role: 'admin'
+        };
 
+        return user;
+    }
     canAccess() {
         if (!this.isAuthenticated()) {
             //redirect to login
@@ -32,7 +40,7 @@ export class AuthService {
             if (redirectUrl) {
                 this.router.navigate([redirectUrl]);
             } else {
-                this.router.navigate(['/dashboard']);
+                this.router.navigate(['/']);
             }
         }
     }
@@ -44,13 +52,9 @@ export class AuthService {
         localStorage.setItem('userInfo', JSON.stringify(user))
     }
     login(username: string, password: string): Observable<any> {
-        // fake authentication
-        const userFound = this.users.find((user) => user.username === username && user.password === password)
-        if (userFound) {
-            return of({ token: "abc9293jjdad23144123", message: "Login Success", this: { id: userFound.id, username: userFound.username, email: userFound.email } })
-        } else {
-            return throwError('Đăng nhập thất bại! Vui lòng thử lại');
-        }
+        const randomToken = Math.floor(Math.random() * 1000000)
+        const accessUser = { id: randomToken, username: username, email: `${username}@gmail.com`, role: "admin" }
+        return of({ token: randomToken, message: "Login Success" })
     }
 
     logout() {
