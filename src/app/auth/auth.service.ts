@@ -8,7 +8,22 @@ import { User } from './shared/models/User';
     providedIn: 'root'
 })
 export class AuthService {
-    constructor(private router: Router, private http: HttpClient) { }
+    private randomUser: User[];
+    constructor(private router: Router, private http: HttpClient) {
+        const numberOfUsers = 10;
+
+        this.randomUser = JSON.parse(localStorage.getItem('userList') || '[]');
+
+        if (this.randomUser.length === 0) {
+            this.randomUser = [];
+            for (let i = 1; i <= numberOfUsers; i++) {
+                const user = this.generateRandomUser();
+                this.randomUser.push(user);
+            }
+            localStorage.setItem('userList', JSON.stringify(this.randomUser));
+        }
+
+    }
 
     isAuthenticated(): boolean {
         if (localStorage.getItem('token') !== null) {
@@ -20,6 +35,7 @@ export class AuthService {
         var user = {
             id: Math.floor(Math.random() * 1000000),
             username: Math.random().toString(36).substring(7),
+            password: Math.random().toString(36).substring(7),
             email: Math.random().toString(36).substring(7) + '@example.com',
             role: 'admin'
         };
@@ -52,14 +68,21 @@ export class AuthService {
         localStorage.setItem('userInfo', JSON.stringify(user))
     }
     login(username: string, password: string): Observable<any> {
-        const randomToken = Math.floor(Math.random() * 1000000)
-        const accessUser = { id: randomToken, username: username, email: `${username}@gmail.com`, role: "admin" }
-        return of({ token: randomToken, message: "Login Success" })
+        const userList: User[] = JSON.parse(localStorage.getItem("userList") as string) || [];
+        const existUser = userList.find(user => user.username === username && user.password === password)
+        if(existUser){
+            return of({ token: existUser.id, message: "Login Success" })
+        }else {
+            const randomToken = Math.floor(Math.random() * 1000000)
+            const accessUser = { id: randomToken, username: username, email: `${username}@gmail.com`,password:password, role: "admin" }
+            const newUserList = [...userList, accessUser]
+            localStorage.setItem('userList', JSON.stringify(newUserList));
+            return of({ token: randomToken, message: "Login Success" })
+        }
     }
 
     logout() {
         localStorage.removeItem('token');
-        localStorage.removeItem('userInfo');
         localStorage.removeItem('redirectUrl');
         this.router.navigate(['/login']);
     }
