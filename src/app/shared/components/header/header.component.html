@@ -2,7 +2,7 @@
     <div class="header-wrapper">
        <ul class="nav-wrapper">
             <li *ngFor="let item of items">
-                <a routerLink="item.routerLink">{{item.label}}</a>
+                <a [routerLink]="item.routerLink">{{item.label}}</a>
             </li>
        </ul>
        <button (click)="logout()" class="btn">

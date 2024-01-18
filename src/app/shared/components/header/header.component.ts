@@ -17,6 +17,7 @@ export class HeaderComponent {
     this.items = [
       { label: 'Home', routerLink: '/home' },
       { label: 'Books', routerLink: '/books' },
+      { label: 'Users', routerLink: '/users' },
     ];
   }
   logout() {

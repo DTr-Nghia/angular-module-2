@@ -1,0 +1,63 @@
+<section class="p-5">
+    <div class="mb-5">
+        <button class="btn" (click)="showDialog()">
+            Add User
+        </button>
+    </div>
+    <p-table [value]="userList" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="p-3">ID</th>
+                <th class="p-3">Username</th>
+                <th class="p-3">Email</th>
+                <th class="p-3">Role</th>
+                <th class="p-3"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td class="p-3">{{ user.id }}</td>
+                <td class="p-3">{{ user.username }}</td>
+                <td class="p-3">{{ user.email }}</td>
+                <td class="p-3">{{ user.role }}</td>
+                <td class="flex p-3">
+                    <button class="bg-transparent border-none cursor-pointer">
+                        Edit
+                    </button>
+                    /
+                    <button class="bg-transparent border-none cursor-pointer" (click)="deleteUser(user.id)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-dialog [modal]="true" [(visible)]="visible" [style]="{width: '40vw'}">
+        <ng-template pTemplate="header">
+            <span class="font-bold white-space-nowrap p-3">Add User</span>
+        </ng-template>
+        <div class="p-3">
+            <form action="" #f="ngForm" (ngSubmit)="onSubmit()">
+                <div class="field grid form-group">
+                    <label for="username" class="col-fixed" style="width:100px">Username</label>
+                    <input id="username" name="username" type="text" [(ngModel)]="userForm.username" #username="ngModel"
+                        class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary form-control">
+                </div>
+                <div class="field grid form-group">
+                    <label for="password" class="col-fixed" style="width:100px">Password</label>
+                    <input id="password" name="password" type="password" [(ngModel)]="userForm.password"
+                        #password="ngModel"
+                        class=" w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary form-control">
+                </div>
+                <div class="field grid form-group">
+                    <label for="email" class="col-fixed" style="width:100px">Email</label>
+                    <input id="email" name="email" type="email" [(ngModel)]="userForm.email" #email="ngModel"
+                        class="w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary form-control">
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn" value="Add User" (click)="submit=true">
+                </div>
+            </form>
+        </div>
+    </p-dialog>
+</section>
