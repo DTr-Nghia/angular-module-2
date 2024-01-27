@@ -25,6 +25,21 @@ export class UserService {
             return of({ message: "Create Success!!" })
         }
     }
+    editUser(id: number, data: AddUser): Observable<{ message: string }> {
+        const userList: User[] = JSON.parse(localStorage.getItem("userList") as string) || [];
+        const updateUser = userList.map(user => {
+            if (user.id === id) {
+                return {
+                    ...user,
+                    ...data
+                }
+            } else {
+                return user
+            }
+        })
+        localStorage.setItem('userList', JSON.stringify(updateUser));
+        return of({ message: "Edit Success!!" })
+    }
     deleteUser(id: number): Observable<any> {
         const newList = this.listUser.filter((item: User) => item.id !== id)
         localStorage.setItem('userList', JSON.stringify(newList))

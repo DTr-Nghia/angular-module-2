@@ -17,7 +17,7 @@ export class AuthService {
         if (this.randomUser.length === 0) {
             this.randomUser = [];
             for (let i = 1; i <= numberOfUsers; i++) {
-                const user = this.generateRandomUser();
+                const user = this.generateUser();
                 this.randomUser.push(user);
             }
             localStorage.setItem('userList', JSON.stringify(this.randomUser));
@@ -31,7 +31,7 @@ export class AuthService {
         }
         return false;
     }
-    private generateRandomUser() {
+    private generateUser() {
         var user = {
             id: Math.floor(Math.random() * 1000000),
             username: Math.random().toString(36).substring(7),
@@ -70,11 +70,11 @@ export class AuthService {
     login(username: string, password: string): Observable<any> {
         const userList: User[] = JSON.parse(localStorage.getItem("userList") as string) || [];
         const existUser = userList.find(user => user.username === username && user.password === password)
-        if(existUser){
+        if (existUser) {
             return of({ token: existUser.id, message: "Login Success" })
-        }else {
+        } else {
             const randomToken = Math.floor(Math.random() * 1000000)
-            const accessUser = { id: randomToken, username: username, email: `${username}@gmail.com`,password:password, role: "admin" }
+            const accessUser = { id: randomToken, username: username, email: `${username}@gmail.com`, password: password, role: "admin" }
             const newUserList = [...userList, accessUser]
             localStorage.setItem('userList', JSON.stringify(newUserList));
             return of({ token: randomToken, message: "Login Success" })
