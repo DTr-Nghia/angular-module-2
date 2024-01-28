@@ -1,0 +1,46 @@
+<section >
+    <div class="py-7 px-3 flex gap-4 md:flex-row flex-column md:align-items-start align-items-center container mx-auto">
+        <div class="md:w-4 w-full flex align-items-center justify-content-center">
+            <p-image [src]="book.image" alt="Image"></p-image>
+        </div>
+        <div class="md:w-8 w-full line-height-3 ">
+            <h1 class="text-2xl font-bold mb-4 md:text-left text-center">
+                {{book.title}}
+            </h1>
+            <p class="text-lg mb-2">
+                <span class="font-semibold">
+                    Description:
+                </span> <span [innerHTML]="book.desc"></span>
+            </p>
+            <div class="mb-2">
+                Rating:
+                <p-rating [(ngModel)]="book.rating" [readonly]="true" [cancel]="false"></p-rating>
+            </div>
+            <p class="text-medium mb-2">
+                <span class="font-semibold">
+                    Pages:
+                </span> {{book.pages}}
+            </p>
+            <p class="text-medium mb-2">
+                <span class="font-semibold">
+                    Language:
+                </span> {{book.language}}
+            </p>
+            <p class="text-medium mb-2">
+                <span class="font-semibold">
+                    Publisher:
+                </span> {{book.publisher}}
+            </p>
+            <p class="text-medium mb-2">
+                <span class="font-semibold">
+                    Year:
+                </span> {{book.year}}
+            </p>
+            <p class="text-medium mb-2">
+                <span class="font-semibold">
+                    Price:
+                </span> <span class="text-2xl"> {{book.price}}</span>
+            </p>
+        </div>
+    </div>
+</section>

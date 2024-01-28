@@ -12,11 +12,13 @@
         a {
             text-decoration: none;
             color: #000;
+
             &:hover {
                 text-decoration: underline;
             }
         }
     }
+
     .btn {
         background: #000;
         color: #fff;
@@ -25,6 +27,8 @@
         cursor: pointer;
         transition: all 0.5s;
         border-radius: 8px;
+        text-decoration: none;
+
         &:hover {
             background: #fff;
             color: #000;

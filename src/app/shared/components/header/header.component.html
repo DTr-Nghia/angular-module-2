@@ -1,12 +1,15 @@
 <header>
     <div class="header-wrapper">
-       <ul class="nav-wrapper">
+        <ul class="nav-wrapper">
             <li *ngFor="let item of items">
                 <a [routerLink]="item.routerLink">{{item.label}}</a>
             </li>
-       </ul>
-       <button (click)="logout()" class="btn">
+        </ul>
+        <button (click)="logout()" class="btn" *ngIf="auth.isAuthenticated(); else elseBlock">
             Logout
-       </button>
+        </button>
+        <ng-template #elseBlock>
+            <a routerLink="/login" class="btn" >Login</a>
+        </ng-template>
     </div>
 </header>

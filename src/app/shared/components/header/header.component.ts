@@ -3,24 +3,23 @@ import { AuthService } from '../../../auth/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ButtonModule, MenubarModule, NgFor],
+  imports: [ButtonModule, MenubarModule, NgFor, NgIf],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   items: MenuItem[];
-  constructor(private auth: AuthService) {
+  constructor(public auth: AuthService) {
     this.items = [
-      { label: 'Home', routerLink: '/home' },
-      { label: 'Books', routerLink: '/books' },
+      { label: 'Home', routerLink: '/' },
       { label: 'Users', routerLink: '/users' },
     ];
   }
   logout() {
-    this.auth.logout()
+    this.auth.logout();
   }
 }
