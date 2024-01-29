@@ -15,4 +15,10 @@ export class HttpService {
   post(url: string, body: any): Observable<any> {
     return this.http.post(url, body);
   }
+  put(url: string, body: any): Observable<any> {
+    return this.http.put(url, body);
+  }
+  delete(url: string, body: any): Observable<any> {
+    return this.http.delete(url, body);
+  }
 }

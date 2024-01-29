@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BookDataDetail } from '../shared/models/books.model';
+import { BookData } from '../shared/models/books.model';
 import { BookService } from '../book.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ImageModule } from 'primeng/image';
@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './book-detail.component.scss',
 })
 export class BookDetailComponent {
-  public book: BookDataDetail = {} as BookDataDetail;
+  public book: BookData = {} as BookData;
   constructor(
     private bookService: BookService,
     private route: ActivatedRoute
