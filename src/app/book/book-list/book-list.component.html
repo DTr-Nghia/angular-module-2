@@ -5,7 +5,7 @@
                 <div class="p-toolbar-group-start">
                     <span class="p-input-icon-left">
                         <i class="pi pi-search -mt-2"></i>
-                        <input pInputText placeholder="Search" />
+                        <input pInputText placeholder="Search" [(ngModel)]="searchText" (change)="onSearch()"/>
                     </span>
                 </div>
                 <div class="p-toolbar-group-end" *ngIf="this.authService.isAdmin()">
@@ -36,13 +36,13 @@
                                 </a>
                                 <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
                                     <span class="text-2xl font-semibold">$ {{ item.price }}</span>
-                                    <button pButton class="md:align-self-end mb-2 p-button-rounded btn" >
+                                    <button pButton class="md:align-self-end mb-2 p-button-rounded btn" *ngIf="!this.authService.isAdmin()">
                                         Add to Cart
                                     </button>
-                                    <button pButton class="md:align-self-end mb-2 p-button-rounded btn" (click)="showEditDialog(item)">
+                                    <button pButton class="md:align-self-end mb-2 p-button-rounded btn" (click)="showEditDialog(item)" *ngIf="this.authService.isAdmin()">
                                         Edit Book
                                     </button>
-                                    <button pButton class="md:align-self-end mb-2 p-button-rounded btn" (click)="deleteBook(item.id)">
+                                    <button pButton class="md:align-self-end mb-2 p-button-rounded btn" (click)="deleteBook(item.id)" *ngIf="this.authService.isAdmin()">
                                         Delete Book
                                     </button>
                                 </div>

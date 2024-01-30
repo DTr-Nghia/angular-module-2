@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { BookModule } from './book/book.module';
 import { CommonModule } from '@angular/common';
+import { StoreModule } from '@ngrx/store';
+import { CartReducer } from './store/cart.reducer';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -19,6 +21,7 @@ import { CommonModule } from '@angular/common';
     BrowserAnimationsModule,
     SharedModule,
     BookModule,
+    StoreModule.forRoot({ cart: CartReducer }),
   ],
   providers: [],
   bootstrap: [AppComponent],

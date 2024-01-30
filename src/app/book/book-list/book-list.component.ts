@@ -34,6 +34,7 @@ export class BookListComponent implements OnInit {
   visible: boolean = false;
   isEdit: string = '';
   submit = false;
+  searchText = '';
   public addBookForm: AddBook = {
     title: '',
     subtitle: '',
@@ -57,6 +58,23 @@ export class BookListComponent implements OnInit {
         this.listBooks = list;
       },
     });
+  }
+  onSearch() {
+    if (this.searchText) {
+      this.bookService.getBooks().subscribe({
+        next: (list) => {
+          this.listBooks = list.filter((item) =>
+            item.title.includes(this.searchText)
+          );
+        },
+      });
+    } else {
+      this.bookService.getBooks().subscribe({
+        next: (list) => {
+          this.listBooks = list;
+        },
+      });
+    }
   }
   onSubmit() {
     if (this.isEdit) {
