@@ -9,6 +9,11 @@ const routes: Routes = [
     loadChildren: () => import('./book/book.module').then((m) => m.BookModule),
   },
   {
+    path: 'cart',
+    title: 'Cart',
+    loadChildren: () => import('./cart/cart.module').then((m) => m.CartModule),
+  },
+  {
     path: 'login',
     title: 'Login',
     loadComponent: () =>

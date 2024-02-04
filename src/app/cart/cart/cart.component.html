@@ -1,0 +1,83 @@
+<div class="card px-3 py-6">
+  <p-table
+    [value]="listCart"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    *ngIf="listCart.length > 0"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-end">
+        <button class="btn" (click)="removeAll()">Remove All</button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Price</th>
+        <th>Reviews</th>
+        <th>Quantity</th>
+        <th>Sub Price</th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.book.title }}</td>
+        <td>
+          <img
+            [src]="
+              product.book.image
+                ? product.book.image
+                : '../../../assets/images/book-placeholder.webp'
+            "
+            [alt]="product.book.title"
+            width="100"
+            class="shadow-4 w-5rem"
+          />
+        </td>
+        <td>${{ product.book.price }}</td>
+        <td>
+          <p-rating
+            [ngModel]="product.book.rating"
+            [readonly]="true"
+            [cancel]="false"
+          ></p-rating>
+        </td>
+        <td>
+          <p-inputNumber
+            [(ngModel)]="product.quantity"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            spinnerMode="horizontal"
+            inputId="horizontal"
+            [inputStyle]="{ width: '60px', 'text-align': 'center' }"
+            decrementButtonClass="p-button-secondary"
+            incrementButtonClass="p-button-secondary"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+            (onInput)="updateQuantity(product, $event.value)"
+          ></p-inputNumber>
+        </td>
+        <td>${{ product.quantity * product.book.price }}</td>
+        <td>
+          <div>
+            <button
+              class="border-none bg-transparent cursor-pointer"
+              (click)="removeItem(product.id)"
+            >
+              <i class="pi pi-trash text-xl"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{ listCart ? listCart.length : 0 }} products.
+      </div>
+    </ng-template>
+  </p-table>
+  <ng-template #elseBlock>
+    <div class="text-center">There no item in cart</div>
+  </ng-template>
+</div>

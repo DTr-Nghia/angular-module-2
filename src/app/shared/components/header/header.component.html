@@ -5,11 +5,18 @@
                 <a [routerLink]="item.routerLink">{{item.label}}</a>
             </li>
         </ul>
-        <button (click)="logout()" class="btn" *ngIf="auth.isAuthenticated(); else elseBlock">
-            Logout
-        </button>
-        <ng-template #elseBlock>
-            <a routerLink="/login" class="btn" >Login</a>
-        </ng-template>
+        <div class="flex gap-4 align-items-center">
+            <a routerLink="/cart">
+                <div class="card flex justify-content-center" >
+                    <i class="pi pi-shopping-cart text-xl" pBadge [value]="this.total"></i>
+                </div>
+            </a>
+            <button (click)="logout()" class="btn" *ngIf="auth.isAuthenticated(); else elseBlock">
+                Logout
+            </button>
+            <ng-template #elseBlock>
+                <a routerLink="/login" class="btn" >Login</a>
+            </ng-template>
+        </div>
     </div>
 </header>

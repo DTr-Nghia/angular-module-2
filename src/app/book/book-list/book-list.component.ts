@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../auth/shared/models/User';
 import { AuthService } from '../../auth/auth.service';
-import { HeaderComponent } from '../../shared/components/header/header.component';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AddBook, BookData } from '../shared/models/books.model';
 import { BookService } from '../book.service';
@@ -11,7 +9,10 @@ import { RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
-
+import { CartItem } from '../../cart/models/cart.model';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { CartService } from '../../cart/cart.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -25,6 +26,7 @@ import { DialogModule } from 'primeng/dialog';
     FormsModule,
     DialogModule,
     NgIf,
+    ToastModule,
   ],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss',
@@ -50,13 +52,29 @@ export class BookListComponent implements OnInit {
   };
   constructor(
     private bookService: BookService,
-    public authService: AuthService
+    public authService: AuthService,
+    private cartService: CartService,
+    private messageService: MessageService
   ) {}
   ngOnInit(): void {
     this.bookService.getBooks().subscribe({
       next: (list) => {
         this.listBooks = list;
       },
+    });
+  }
+  addToCart(bookSelected: BookData): void {
+    const newShoppingItem = {
+      id: bookSelected.id,
+      price: bookSelected.price,
+      book: bookSelected,
+    } as CartItem;
+
+    this.cartService.updateCart(newShoppingItem, 1);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Add to Cart Success',
     });
   }
   onSearch() {
